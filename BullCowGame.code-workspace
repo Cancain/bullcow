@@ -1,0 +1,24 @@
+{
+	"folders": [
+		{
+			"name": "BullCowGame",
+			"path": "."
+		},
+		{
+			"name": "UE4",
+			"path": "C:\\Program Files\\Epic Games\\UE_4.25"
+		}
+	],
+	"settings": {
+		"typescript.tsc.autoDetect": "off",
+		"C_Cpp.default.forcedInclude": [
+			"c:\\Users\\eriks\\repos\\udemy_unreal\\BullCow\\Intermediate\\Build\\Win64\\UE4Editor\\Development\\BullCowGame\\Definitions.BullCowGame.h"
+		]
+	},
+	"extensions": {
+		"recommendations": [
+			"ms-vscode.cpptools",
+			"ms-dotnettools.csharp"
+		]
+	}
+}

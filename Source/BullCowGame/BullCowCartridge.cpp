@@ -5,7 +5,7 @@
 void UBullCowCartridge::BeginPlay() // When the game starts
 {
     Super::BeginPlay();
-    const FString WelcomeMessage {TEXT("Welcome to BullCow!\nPress Enter to continue...")};
+    const FString WelcomeMessage {TEXT("Welcome to BullCow! \nPress Enter to continue...")};
     PrintLine(WelcomeMessage);
 }
 
