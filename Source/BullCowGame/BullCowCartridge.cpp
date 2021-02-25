@@ -5,14 +5,27 @@
 void UBullCowCartridge::BeginPlay() // When the game starts
 {
     Super::BeginPlay();
-    const FString welcomeMessage {TEXT("Welcome to BullCow!\nGuess the 4 letter word\nPress enter to continue...")}; // Magic number remove
-    PrintLine(welcomeMessage);
+    hiddenWord = TEXT("mouse");
+    SetupGame();
 }
 
 void UBullCowCartridge::OnInput(const FString& input) // When the player hits enter
 {
-    FString hiddenWord {TEXT("mouse")}; // Move outside this function
+    
     ClearScreen();
-    bool isCorrect = input == hiddenWord;
-    PrintLine(isCorrect ? "You have won!" : "You have lost!");
+    if(input == hiddenWord){
+        PrintLine("You have won!");
+    } else {
+        PrintLine("You have lost!");
+        if(hiddenWord.Len() != input.Len()){
+            PrintLine("The hidden word is 4 characters long, try again!");
+        }
+    }
+}
+
+void UBullCowCartridge::SetupGame(){
+    hiddenWord.Len();
+    PrintLine(TEXT("Welcome to BullCow! Guess the 4 letter word"));   
+    PrintLine(TEXT("Press enter to continue..."));
+    lives = 4;
 }
