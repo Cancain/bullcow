@@ -5,27 +5,36 @@
 void UBullCowCartridge::BeginPlay() // When the game starts
 {
     Super::BeginPlay();
-    hiddenWord = TEXT("mouse");
+    
     SetupGame();
+
+    // PrintLine(FString::Printf(TEXT("The hidden word is %s"), *HiddenWord)); // Overridden in Cartridge.h 
+    PrintLine(TEXT("The hidden word is %s."), *HiddenWord); // Debug line
+
+    PrintLine(TEXT("Welcome to BullCow!"));  
+    PrintLine(TEXT("Guess the %i letter word"), HiddenWord.Len()); 
+    PrintLine(TEXT("Type in your guess and press enter to continue..."));
+
 }
 
 void UBullCowCartridge::OnInput(const FString& input) // When the player hits enter
 {
     
     ClearScreen();
-    if(input == hiddenWord){
+    if(input == HiddenWord){
         PrintLine("You have won!");
     } else {
         PrintLine("You have lost!");
-        if(hiddenWord.Len() != input.Len()){
-            PrintLine("The hidden word is 4 characters long, try again!");
+        if(HiddenWord.Len() != input.Len()){
+            PrintLine(
+                TEXT("The hidden word is %i characters long, try again!"), 
+                    HiddenWord.Len()
+                    );
         }
     }
 }
 
 void UBullCowCartridge::SetupGame(){
-    hiddenWord.Len();
-    PrintLine(TEXT("Welcome to BullCow! Guess the 4 letter word"));   
-    PrintLine(TEXT("Press enter to continue..."));
-    lives = 4;
+    HiddenWord = TEXT("mouse");
+    Lives = HiddenWord.Len();
 }
