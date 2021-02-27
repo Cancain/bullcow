@@ -22,12 +22,14 @@ void UBullCowCartridge::OnInput(const FString& input){ // When the player hits e
             PrintLine(TEXT("You have won!"));
             EndGame();
         } else {
-            if(HiddenWord.Len() != input.Len()){
-                PrintLine(
-                    TEXT("The hidden word is %i characters long. \nYou have lost"), 
-                        HiddenWord.Len()
-                );
-
+            PrintLine(TEXT("Lost a life!"));
+            PrintLine(TEXT("%i"), --Lives);
+            if(Lives > 0){
+                if(input.Len() != HiddenWord.Len()){
+                    PrintLine(TEXT("Sorry, try guessing again!.\nYou have %i lives"), Lives);
+                }
+            } else {
+                PrintLine(TEXT("You have no lives left"));
                 EndGame();
             }
         }
@@ -42,7 +44,8 @@ void UBullCowCartridge::SetupGame(){
     bGameOver = false;
 
     PrintLine(TEXT("Guess the %i letter word"), HiddenWord.Len()); 
-    PrintLine(TEXT("Type in your guess. \nPress enter to continue..."));
+    PrintLine(TEXT("You have %i lives."), Lives); 
+    PrintLine(TEXT("Type in your guess and \nPress enter to continue..."));
 }
 
 void UBullCowCartridge::EndGame(){
