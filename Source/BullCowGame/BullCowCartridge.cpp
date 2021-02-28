@@ -38,7 +38,7 @@ void UBullCowCartridge::EndGame() {
   PrintLine(TEXT("\nPress enter to play again"));
 }
 
-bool UBullCowCartridge::IsIsogram(FString Word) {
+bool UBullCowCartridge::IsIsogram(FString Word) const {
   // Check index 0, add to array
   // Check index 1, if it exists in array return false, else add to array
   // Continue untill end of Guess
