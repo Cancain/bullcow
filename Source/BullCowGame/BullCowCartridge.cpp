@@ -1,4 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
 #include "BullCowCartridge.h"
 
 #include <String>
@@ -39,25 +38,12 @@ void UBullCowCartridge::EndGame() {
 }
 
 bool UBullCowCartridge::IsIsogram(FString Word) const {
-  // Check index 0, add to array
-  // Check index 1, if it exists in array return false, else add to array
-  // Continue untill end of Guess
-
-  // for (size_t i = 0; i < HiddenWord.Len(); i++) {
-  //   PrintLine(TEXT("%c"), HiddenWord[i]);
-  // }
-
-  // for (size_t i = 0; i < Word.Len(); i++) {
-  //   PrintLine(TEXT("%c"), Word[i]);
-  // }
-
-  // int32 Index = 0;
-  // int32 Comparison = Index + 1;
-
-  for (int32 Index = 0, Comparison = Index + 1; Comparison < Word.Len();
-       Comparison++) {
-    if (Word[Index] == Word[Comparison]) {
-      return false;
+  for (int32 Index = 0; Index < Word.Len(); Index++) {
+    for (int32 Comparison = Index + 1; Comparison < Word.Len(); Comparison++) {
+      PrintLine(TEXT("index: %c, Comp: %c"), Word[Index], Word[Comparison]);
+      if (Word[Index] == Word[Comparison]) {
+        return false;
+      }
     }
   }
 
