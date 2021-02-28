@@ -1,14 +1,13 @@
 #include "BullCowCartridge.h"
-#include "HiddenWordList.h"
-
-#include <String>
+#include "Misc/FileHelper.h"
+#include "Misc/Paths.h"
 
 void UBullCowCartridge::BeginPlay() {  // When the game starts
   Super::BeginPlay();
+  const FString WordListPath{FPaths::ProjectContentDir() /
+                             TEXT("WordLists/HiddenWordList.txt")};
+  FFileHelper::LoadFileToStringArray(Words, *WordListPath);
   SetupGame();
-
-  // PrintLine(FString::Printf(TEXT("The hidden word is %s"), *HiddenWord)); //
-  // Overridden in Cartridge.h
   PrintLine(TEXT("The hidden word is %s."), *HiddenWord);  // Debug line
 }
 
@@ -23,8 +22,7 @@ void UBullCowCartridge::OnInput(const FString& Input) {
 
 void UBullCowCartridge::SetupGame() {
   PrintLine(TEXT("Welcome to BullCow!"));
-
-  HiddenWord = Words[3];
+  HiddenWord = Words[2];
   Lives = HiddenWord.Len();
   bGameOver = false;
 
