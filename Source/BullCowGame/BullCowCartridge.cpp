@@ -1,4 +1,5 @@
 #include "BullCowCartridge.h"
+#include "HiddenWordList.h"
 
 #include <String>
 
@@ -23,7 +24,7 @@ void UBullCowCartridge::OnInput(const FString& Input) {
 void UBullCowCartridge::SetupGame() {
   PrintLine(TEXT("Welcome to BullCow!"));
 
-  HiddenWord = TEXT("mouse");
+  HiddenWord = Words[3];
   Lives = HiddenWord.Len();
   bGameOver = false;
 
@@ -40,7 +41,6 @@ void UBullCowCartridge::EndGame() {
 bool UBullCowCartridge::IsIsogram(FString Word) const {
   for (int32 Index = 0; Index < Word.Len(); Index++) {
     for (int32 Comparison = Index + 1; Comparison < Word.Len(); Comparison++) {
-      PrintLine(TEXT("index: %c, Comp: %c"), Word[Index], Word[Comparison]);
       if (Word[Index] == Word[Comparison]) {
         return false;
       }
