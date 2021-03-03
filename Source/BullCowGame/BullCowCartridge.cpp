@@ -13,8 +13,10 @@ void UBullCowCartridge::BeginPlay() {  // When the game starts
   GetWords();
   SetupGame();
 
-  for (size_t i = 0; i < 5; i++) {
-    PrintLine(TEXT("%s"), *Words[i]);
+  for (size_t i = 0; i < 10; i++) {
+    if (Words[i].Len() >= 4 && Words[i].Len() <= 8) {
+      PrintLine(TEXT("%s"), *Words[i]);
+    }
   }
 
   PrintLine(TEXT("The number of possible words is: %i"), Words.Num());
