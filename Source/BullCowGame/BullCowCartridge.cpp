@@ -2,12 +2,22 @@
 #include "Misc/FileHelper.h"
 #include "Misc/Paths.h"
 
-void UBullCowCartridge::BeginPlay() {  // When the game starts
-  Super::BeginPlay();
+void UBullCowCartridge::GetWords() {
   const FString WordListPath{FPaths::ProjectContentDir() /
                              TEXT("WordLists/HiddenWordList.txt")};
   FFileHelper::LoadFileToStringArray(Words, *WordListPath);
+}
+
+void UBullCowCartridge::BeginPlay() {  // When the game starts
+  Super::BeginPlay();
+  GetWords();
   SetupGame();
+
+  for (size_t i = 0; i < 5; i++) {
+    PrintLine(TEXT("%s"), *Words[i]);
+  }
+
+  PrintLine(TEXT("The number of possible words is: %i"), Words.Num());
   PrintLine(TEXT("The hidden word is %s."), *HiddenWord);  // Debug line
 }
 
