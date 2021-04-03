@@ -5,6 +5,7 @@
 
 void UBullCowCartridge::BeginPlay() {  // When the game starts
   Super::BeginPlay();
+
   GetWords();
   SetupGame();
 }
@@ -85,11 +86,10 @@ void UBullCowCartridge::ProcessGuess(const FString& Guess) {
     return;
   }
 
-  int32 Bulls, Cows;
-  GetBullCows(Guess, Bulls, Cows);
-  PrintLine(TEXT("You have %i Bulls and %i Cows"), Bulls, Cows);
-
-  PrintLine(TEXT("Guess again, you hav %i lives left"), Lives);
+  FBullCowCount BullCowCount{GetBullCows(Guess)};
+  PrintLine(TEXT("You have %i Bulls and %i Cows"), BullCowCount.Bulls,
+            BullCowCount.Cows);
+  PrintLine(TEXT("Guess again, you have %i lives left"), Lives);
 }
 
 void UBullCowCartridge::GetWords() {
@@ -114,21 +114,20 @@ TArray<FString> UBullCowCartridge::GetValidWords(
   return ValidWords;
 }
 
-void UBullCowCartridge::GetBullCows(const FString& Guess, int32& BullCount,
-                                    int32& CowCount) const {
-  BullCount = 0;
-  CowCount = 0;
+FBullCowCount UBullCowCartridge::GetBullCows(const FString& Guess) const {
+  FBullCowCount BullCowCount;
 
   for (size_t i = 0; i < Guess.Len(); i++) {
     if (Guess[i] == HiddenWord[i]) {
-      BullCount++;
+      BullCowCount.Bulls++;
       continue;
     }
     for (size_t y = 0; y < HiddenWord.Len(); y++) {
       if (Guess[i] == HiddenWord[y]) {
-        CowCount++;
+        BullCowCount.Cows++;
         break;
       }
     }
   }
+  return BullCowCount;
 }
