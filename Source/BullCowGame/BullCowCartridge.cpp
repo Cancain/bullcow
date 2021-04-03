@@ -2,16 +2,14 @@
 #include "Misc/FileHelper.h"
 #include "Misc/Paths.h"
 
-void UBullCowCartridge::GetWords() {
-  const FString WordListPath{FPaths::ProjectContentDir() /
-                             TEXT("WordLists/HiddenWordList.txt")};
-  FFileHelper::LoadFileToStringArray(Words, *WordListPath);
-}
-
 void UBullCowCartridge::BeginPlay() {  // When the game starts
   Super::BeginPlay();
   GetWords();
   SetupGame();
+
+  int16 a{0};
+  int16 b{5};
+  const int16& refa{a};
 
   PrintLine(TEXT("The number of possible words is: %i"), Words.Num());
   PrintLine(TEXT("The number of valid words is: %i."),
@@ -19,12 +17,12 @@ void UBullCowCartridge::BeginPlay() {  // When the game starts
   PrintLine(TEXT("The hidden word is %s."), *HiddenWord);  // Debug line
 }
 
-void UBullCowCartridge::OnInput(const FString& Input) {
+void UBullCowCartridge::OnInput(const FString& PlayerInput) {
   if (bGameOver) {
     ClearScreen();
     SetupGame();
   } else {
-    ProcessGuess(Input);
+    ProcessGuess(PlayerInput);
   }
 }
 
@@ -44,7 +42,7 @@ void UBullCowCartridge::EndGame() {
   PrintLine(TEXT("\nPress enter to play again"));
 }
 
-bool UBullCowCartridge::IsIsogram(FString Word) const {
+bool UBullCowCartridge::IsIsogram(const FString& Word) const {
   for (int32 Index = 0; Index < Word.Len(); Index++) {
     for (int32 Comparison = Index + 1; Comparison < Word.Len(); Comparison++) {
       if (Word[Index] == Word[Comparison]) {
@@ -56,7 +54,7 @@ bool UBullCowCartridge::IsIsogram(FString Word) const {
   return true;
 }
 
-void UBullCowCartridge::ProcessGuess(FString Guess) {
+void UBullCowCartridge::ProcessGuess(const FString& Guess) {
   if (Guess == HiddenWord) {
     PrintLine(TEXT("You have won!"));
     EndGame();
@@ -88,8 +86,14 @@ void UBullCowCartridge::ProcessGuess(FString Guess) {
   PrintLine(TEXT("Guess again, you hav %i lives left"), Lives);
 }
 
+void UBullCowCartridge::GetWords() {
+  const FString WordListPath{FPaths::ProjectContentDir() /
+                             TEXT("WordLists/HiddenWordList.txt")};
+  FFileHelper::LoadFileToStringArray(Words, *WordListPath);
+}
+
 TArray<FString> UBullCowCartridge::GetValidWords(
-    TArray<FString> WordList) const {
+    const TArray<FString>& WordList) const {
   TArray<FString> ValidWords;
 
   for (FString Word : WordList) {

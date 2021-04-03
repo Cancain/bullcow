@@ -12,13 +12,13 @@ class BULLCOWGAME_API UBullCowCartridge : public UCartridge {
 
  public:
   virtual void BeginPlay() override;
-  virtual void OnInput(const FString& Input) override;
+  virtual void OnInput(const FString& PlayerInput) override;
   void SetupGame();
   void EndGame();
-  void ProcessGuess(FString Guess);
-  bool IsIsogram(FString Word) const;
+  void ProcessGuess(const FString& Guess);
+  bool IsIsogram(const FString& Word) const;
   void GetWords();
-  TArray<FString> GetValidWords(TArray<FString> WordList) const;
+  TArray<FString> GetValidWords(const TArray<FString>& WordList) const;
 
  private:
   int32 Lives;
