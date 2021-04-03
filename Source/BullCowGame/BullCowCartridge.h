@@ -23,6 +23,7 @@ class BULLCOWGAME_API UBullCowCartridge : public UCartridge {
                    int32& CowCount) const;
 
  private:
+  bool Debug;
   TArray<FString> Isograms;
   int32 Lives;
   FString HiddenWord;

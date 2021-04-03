@@ -10,6 +10,11 @@ void UBullCowCartridge::BeginPlay() {  // When the game starts
 }
 
 void UBullCowCartridge::OnInput(const FString& PlayerInput) {
+  if (PlayerInput == TEXT("debug")) {
+    Debug = true;
+    PrintLine(TEXT("The hidden word is %s."), *HiddenWord);  // Debug line
+    return;
+  }
   if (bGameOver) {
     ClearScreen();
     SetupGame();
@@ -27,7 +32,9 @@ void UBullCowCartridge::SetupGame() {
   bGameOver = false;
 
   PrintLine(TEXT("Guess the %i letter word"), HiddenWord.Len());
-  PrintLine(TEXT("The hidden word is %s."), *HiddenWord);  // Debug line
+  if (Debug) {
+    PrintLine(TEXT("The hidden word is %s."), *HiddenWord);  // Debug line
+  }
   PrintLine(TEXT("You have %i lives."), Lives);
   PrintLine(TEXT("Type in your guess and \nPress enter to continue..."));
 }
