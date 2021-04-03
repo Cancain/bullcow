@@ -1,20 +1,12 @@
 #include "BullCowCartridge.h"
 #include "Misc/FileHelper.h"
 #include "Misc/Paths.h"
+// #include "Math/UnrealMathUtility.h"
 
 void UBullCowCartridge::BeginPlay() {  // When the game starts
   Super::BeginPlay();
   GetWords();
   SetupGame();
-
-  int16 a{0};
-  int16 b{5};
-  const int16& refa{a};
-
-  PrintLine(TEXT("The number of possible words is: %i"), Words.Num());
-  PrintLine(TEXT("The number of valid words is: %i."),
-            GetValidWords(Words).Num());
-  PrintLine(TEXT("The hidden word is %s."), *HiddenWord);  // Debug line
 }
 
 void UBullCowCartridge::OnInput(const FString& PlayerInput) {
@@ -28,13 +20,17 @@ void UBullCowCartridge::OnInput(const FString& PlayerInput) {
 
 void UBullCowCartridge::SetupGame() {
   PrintLine(TEXT("Welcome to BullCow!"));
-  HiddenWord = Words[2];
+
+  const TArray<FString> ValidWords{GetValidWords(Words)};
+  HiddenWord = ValidWords[FMath::RandRange(0, ValidWords.Num() - 1)];
+
   Lives = HiddenWord.Len();
   bGameOver = false;
 
   PrintLine(TEXT("Guess the %i letter word"), HiddenWord.Len());
   PrintLine(TEXT("You have %i lives."), Lives);
   PrintLine(TEXT("Type in your guess and \nPress enter to continue..."));
+  PrintLine(TEXT("The hidden word is %s."), *HiddenWord);  // Debug line
 }
 
 void UBullCowCartridge::EndGame() {
