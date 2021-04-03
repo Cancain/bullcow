@@ -122,13 +122,12 @@ void UBullCowCartridge::GetBullCows(const FString& Guess, int32& BullCount,
   for (size_t i = 0; i < Guess.Len(); i++) {
     if (Guess[i] == HiddenWord[i]) {
       BullCount++;
-      PrintLine("Bull");
       continue;
     }
     for (size_t y = 0; y < HiddenWord.Len(); y++) {
       if (Guess[i] == HiddenWord[y]) {
         CowCount++;
-        PrintLine("Cow");
+        break;
       }
     }
   }
